@@ -119,37 +119,42 @@ class _StoryPageState extends State<StoryPage> {
   ];
 
   void _nextStep(int nextStep) {
+    if (nextStep < 0 || nextStep >= storySteps.length) return;
+
     setState(() {
       currentStep = nextStep;
       storyText = storySteps[currentStep]['text'] as String;
     });
 
-    // Nếu là bước kết thúc (không còn lựa chọn)
-    if ((storySteps[nextStep]['choices'] as List).isEmpty) {
-      Future.delayed(Duration(milliseconds: 400), () {
+    Future.delayed(Duration(milliseconds: 100), () {
+      if (!mounted) return;
+
+      final choices = storySteps[currentStep]['choices'] as List?;
+      if (choices == null || choices.isEmpty) {
         showDialog(
           context: context,
-          builder: (ctx) =>
-              AlertDialog(
-                title: Text('🎬 Kết thúc câu chuyện'),
-                content: Text('Cảm ơn bạn đã tham gia cuộc hành trình.'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(ctx).pop();
-                      setState(() {
-                        currentStep = 0;
-                        storyText = storySteps[0]['text'] as String;
-                      });
-                    },
-                    child: Text('🔁 Bắt đầu lại'),
-                  )
-                ],
-              ),
+          builder: (ctx) => AlertDialog(
+            title: Text('🎬 Kết thúc câu chuyện'),
+            content: Text('Cảm ơn bạn đã tham gia cuộc hành trình.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  setState(() {
+                    currentStep = 0;
+                    storyText = storySteps[0]['text'] as String;
+                  });
+                },
+                child: Text('🔁 Bắt đầu lại'),
+              )
+            ],
+          ),
         );
-      });
-    }
+      }
+    });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
