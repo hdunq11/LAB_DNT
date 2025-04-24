@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab_flutter/lab5.dart';
 import 'package:lab_flutter/lab6.dart';
+import 'package:lab_flutter/lab9/lab9new.dart';
 import 'lab1.dart'; // Thêm các import cho các lab
 import 'lab2.dart';
 import 'lab3.dart';
@@ -8,6 +9,8 @@ import 'lab4.dart';
 import 'lab5.dart';
 import 'lab6.dart';
 import 'lab7.dart';
+import 'lab8.dart';
+import 'lab9.dart';
 // ...
 
 void main() {
@@ -43,6 +46,8 @@ class MainScreen extends StatelessWidget {
                       case 4: return XylophoneApp();
                       case 5: return QuizPage();
                       case 6: return StoryPage();
+                      case 7: return BMIPage();
+                      case 8: return NewWeatherScreen();
                     // Thêm các màn hình khác vào đây
                       default: return Scaffold();
                     }
